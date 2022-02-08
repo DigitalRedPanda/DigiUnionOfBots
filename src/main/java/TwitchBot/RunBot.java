@@ -9,7 +9,7 @@ import static TwitchBot.BotResources.Prefix;
 import static TwitchBot.Prepare.*;
 import static TwitchBot.Scan.PullWinner;
 
-public class RunBot {
+public class RunBot{
     static ArrayList<String> Candidates = new ArrayList<>();
     static boolean GiveawayIsOpen=false;
     public static void main(String[] args){
