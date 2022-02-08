@@ -7,7 +7,6 @@ import java.util.Objects;
 import static TwitchBot.BotResources.DefaultChannel;
 import static TwitchBot.BotResources.Prefix;
 import static TwitchBot.Prepare.*;
-import static TwitchBot.Scan.PullWinner;
 
 public class RunBot{
     static ArrayList<String> Candidates = new ArrayList<>();
@@ -58,9 +57,10 @@ public class RunBot{
                 if(UsedCommand.equalsIgnoreCase("pull") && User.equalsIgnoreCase(DefaultChannel) && GiveawayIsOpen){
                     if(!Candidates.isEmpty()){
                         System.out.print(Candidates);
-                        String LuckyWinner = PullWinner(Candidates);
-                        OnMessage.getTwitchChat().sendMessage(Channel,String.format("Congratulations %s, you've just won the giveaway", LuckyWinner));
-                        TC.getChat().sendPrivateMessage(LuckyWinner,"Congratulations here's your code: 1WUYT-EYFS2-MNF8F");
+                        int LuckyWinnerIndex = (int) Math.round(Math.random() * Candidates.size());
+                        String Winner = Candidates.get(LuckyWinnerIndex);
+                        OnMessage.getTwitchChat().sendMessage(Channel,String.format("Congratulations %s, you've just won the giveaway", Winner));
+                        TC.getChat().sendPrivateMessage(Winner,"Congratulations here's your code: 1WUYT-EYFS2-MNF8F");
                         Candidates.clear();
                     }else
                         OnMessage.getTwitchChat().sendMessage(Channel, "Cannot pull a winner without participants");
