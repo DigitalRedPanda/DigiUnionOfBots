@@ -36,6 +36,11 @@ public class RunBot {
                         LeaveChannel(CommandContent[1]);
                     }catch (ArrayIndexOutOfBoundsException e) {
                         OnMessage.getTwitchChat().sendMessage(DefaultChannel, String.format("%s, cannot remove an empty channel",User));
+                    }}if(UsedCommand.equalsIgnoreCase("DM")){
+                    try{
+                   OnMessage.getTwitchChat().sendPrivateMessage(CommandContent[1],"See? PagMan");
+                }catch(ArrayIndexOutOfBoundsException e){
+                        OnMessage.getTwitchChat().sendMessage(DefaultChannel,"Cannot DM an empty user");
                     }}if(UsedCommand.equalsIgnoreCase("enablegiveaway") && User.equalsIgnoreCase(DefaultChannel)){
                     GiveawayIsOpen = true;
                     OnMessage.getTwitchChat().sendMessage(Channel, "Giveaway has been enabled");
