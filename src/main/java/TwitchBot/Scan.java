@@ -1,7 +1,6 @@
 package TwitchBot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Scan {
     static boolean FindSI(String Context){
@@ -24,7 +23,6 @@ public class Scan {
            Contenders[TransferConterdersByIndex] = Nominees.get(TransferConterdersByIndex);
        }
        int Index = (int) Math.round(Math.random() * Contenders.length);
-       String LuckyWinner = Contenders[Index];
-       return LuckyWinner;
+        return Contenders[Index];
     }
 }
