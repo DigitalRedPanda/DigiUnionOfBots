@@ -1,14 +1,17 @@
 package TwitchBot;
 
+import com.github.philippheuer.credentialmanager.CredentialManager;
+import com.github.philippheuer.credentialmanager.CredentialManagerBuilder;
 import com.github.philippheuer.credentialmanager.domain.OAuth2Credential;
 import com.github.twitch4j.TwitchClient;
 import com.github.twitch4j.TwitchClientBuilder;
-
+import com.github.twitch4j.auth.providers.TwitchIdentityProvider;
 import java.util.Objects;
 
 import static TwitchBot.BotResources.*;
 
 public interface Prepare {
+     CredentialManager credentialManager = CredentialManagerBuilder.builder().build();
     OAuth2Credential credential = new OAuth2Credential("twitch", Objects.requireNonNull(Token));
     TwitchClient TC = TwitchClientBuilder.builder()
             .withClientId(ClientID)
@@ -37,6 +40,7 @@ public interface Prepare {
             TC.getChat().sendMessage(DefaultChannel,String.format("%s isn't joined", ChannelToLeave));
     }static void Initialize(){
      TC.getChat().connect();
+     credentialManager.registerIdentityProvider(new TwitchIdentityProvider(ClientID,ClientSecret,RedirectURL));
      TC.getChat().sendMessage(DefaultChannel,"Bot has been initialized");
      JoinChannel(DefaultChannel);
     }
