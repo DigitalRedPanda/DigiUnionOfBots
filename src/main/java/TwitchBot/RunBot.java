@@ -14,7 +14,6 @@ public class RunBot {
     static boolean GiveawayIsOpen=false;
     public static void main(String[] args){
      Initialize();
-
      TC.getEventManager().onEvent(ChannelMessageEvent.class, OnMessage ->{
             String Message = OnMessage.getMessage();
             String User = OnMessage.getUser().getName();
