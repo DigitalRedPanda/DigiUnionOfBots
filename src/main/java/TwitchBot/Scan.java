@@ -18,11 +18,7 @@ public class Scan {
 
         return false;
     }static String PullWinner(ArrayList<String> Nominees){
-       String[] Contenders = new String[Nominees.size()];
-       for(int TransferConterdersByIndex = 0; TransferConterdersByIndex<Contenders.length-1; TransferConterdersByIndex++){
-           Contenders[TransferConterdersByIndex] = Nominees.get(TransferConterdersByIndex);
-       }
-       int Index = (int) Math.round(Math.random() * Contenders.length);
-        return Contenders[Index];
+       int Index = (int) Math.round(Math.random() * Nominees.size());
+        return Nominees.get(Index);
     }
 }
