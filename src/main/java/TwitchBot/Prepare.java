@@ -27,7 +27,7 @@ public interface Prepare {
     static void JoinChannel(String ChannelToJoin){
         if(!TC.getChat().isChannelJoined(ChannelToJoin)){
             TC.getChat().joinChannel(ChannelToJoin);
-            TC.getChat().sendMessage(ChannelToJoin,String.format("hello %s, %s has added your channel",ChannelToJoin,NickName));
+            TC.getChat().sendMessage(ChannelToJoin,String.format("Hello %s, %s has added your channel",ChannelToJoin,NickName));
         }else
             TC.getChat().sendMessage(DefaultChannel,String.format("%s is already joined",ChannelToJoin));
 
@@ -43,5 +43,14 @@ public interface Prepare {
      credentialManager.registerIdentityProvider(new TwitchIdentityProvider(ClientID,ClientSecret,RedirectURL));
      TC.getChat().sendMessage(DefaultChannel,"Bot has been initialized");
      JoinChannel(DefaultChannel);
+    }static boolean ChannelExists(String ChannelToConfirm){
+        boolean ChannelDoesExist;
+        if(!TC.getChat().isChannelJoined(ChannelToConfirm)){
+            TC.getChat().joinChannel(ChannelToConfirm);
+            ChannelDoesExist = TC.getChat().isChannelJoined(ChannelToConfirm);
+            TC.getChat().leaveChannel(ChannelToConfirm);
+        }else{
+            ChannelDoesExist = TC.getChat().isChannelJoined(ChannelToConfirm);
+        } return ChannelDoesExist;
     }
 }

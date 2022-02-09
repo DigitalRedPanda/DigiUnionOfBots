@@ -26,11 +26,15 @@ public class RunBot{
                 String UsedCommand = CommandContent[0];
                 System.out.printf("[%s] %s used %s\n", Channel, User,UsedCommand);
                 if (UsedCommand.equalsIgnoreCase("add")) {
-                    try {
+
+                    try{
+                    if(Prepare.ChannelExists(CommandContent[1]))
                         JoinChannel(CommandContent[1]);
+                    else
+                        OnMessage.getTwitchChat().sendMessage(Channel,String.format("%s, the channel implied %s doesn't seem to exist",User, CommandContent[1]));
                     }catch (ArrayIndexOutOfBoundsException e) {
                         OnMessage.getTwitchChat().sendMessage(DefaultChannel, String.format("%s, cannot add an empty channel", User));
-                    }}if (UsedCommand.equalsIgnoreCase("remove")) {
+                    }}if (UsedCommand.equalsIgnoreCase("remove")){
                     try{
                         LeaveChannel(CommandContent[1]);
                     }catch (ArrayIndexOutOfBoundsException e) {
@@ -52,9 +56,12 @@ public class RunBot{
                         OnMessage.getTwitchChat().sendMessage(Channel,String.format("%s, you've participated!",User));
                     }else
                         OnMessage.getTwitchChat().sendMessage(Channel,String.format("%s, you've already participated in the giveaway",UsedCommand));
-                }if(UsedCommand.equalsIgnoreCase("Participants"))
-                    OnMessage.getTwitchChat().sendMessage(Channel,Candidates.toString().replace('[','\0').replace(']','\0'));
-                if(UsedCommand.equalsIgnoreCase("pull") && User.equalsIgnoreCase(DefaultChannel) && GiveawayIsOpen){
+                }if(UsedCommand.equalsIgnoreCase("Participants")){
+                    if(!Candidates.isEmpty())
+                    OnMessage.getTwitchChat().sendMessage(Channel, Candidates.toString().replace('[', '\0').replace(']', '\0'));
+                    else
+                        OnMessage.getTwitchChat().sendMessage(Channel, String.format("%s, there aren't any participants to show", User));
+                }if(UsedCommand.equalsIgnoreCase("pull") && User.equalsIgnoreCase(DefaultChannel) && GiveawayIsOpen){
                     if(!Candidates.isEmpty()){
                         System.out.print(Candidates);
                         int LuckyWinnerIndex = (int) Math.round(Math.random() * Candidates.size());
