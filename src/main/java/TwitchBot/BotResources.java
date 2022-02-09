@@ -13,6 +13,7 @@ String Token = dotenv.get("TOKEN");
 String DefaultChannel = dotenv.get("DEFAULT_CHANNEL");
 String RedirectURL = dotenv.get("REDIRECT_URL");
 String SpecialGuest = dotenv.get("SPECIAL_GUEST");
+String SpecialChannel = dotenv.get("SPECIAL_CHANNEL");
 String NickName = DefaultChannel.substring(0,4);
 String Prefix = dotenv.get("PREFIX");
 }
