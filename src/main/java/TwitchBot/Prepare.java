@@ -21,6 +21,7 @@ public interface Prepare {
             .withEnablePubSub(true)
             .withDefaultAuthToken(credential)
             .withEnableHelix(true)
+            .withEnableTMI(true)
             .withChatAccount(credential)
             .withCommandTrigger(Prefix)
             .build();
@@ -45,12 +46,9 @@ public interface Prepare {
      JoinChannel(DefaultChannel);
     }static boolean ChannelExists(String ChannelToConfirm){
         boolean ChannelDoesExist;
-        if(!TC.getChat().isChannelJoined(ChannelToConfirm)){
-            TC.getChat().joinChannel(ChannelToConfirm);
-            ChannelDoesExist = TC.getChat().isChannelJoined(ChannelToConfirm);
-            TC.getChat().leaveChannel(ChannelToConfirm);
-        }else{
-            ChannelDoesExist = TC.getChat().isChannelJoined(ChannelToConfirm);
-        } return ChannelDoesExist;
+        TC.getChat().joinChannel(ChannelToConfirm);
+        ChannelDoesExist = TC.getChat().isChannelJoined(ChannelToConfirm);
+        TC.getChat().leaveChannel(ChannelToConfirm);
+        return ChannelDoesExist;
     }
 }
