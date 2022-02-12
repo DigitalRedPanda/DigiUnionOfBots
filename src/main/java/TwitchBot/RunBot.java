@@ -3,8 +3,7 @@ package TwitchBot;
 
 import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
 import com.github.twitch4j.events.ChannelChangeGameEvent;
-import com.github.twitch4j.helix.domain.Game;
-import com.github.twitch4j.helix.domain.GameList;
+import com.github.twitch4j.helix.domain.Prediction;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -12,21 +11,17 @@ import java.util.List;
 import java.util.Objects;
 import static TwitchBot.BotResources.*;
 import static TwitchBot.Prepare.*;
-
 public class RunBot{
     static ArrayList<String> Candidates = new ArrayList<>();
     static boolean GiveawayIsOpen=false;
     static List<String> Games = new ArrayList<>();
     static List<String> Games1 = new ArrayList<>();
-
+    static List<Prediction> Predictions = new ArrayList<>();
     public static void main(String[] args){
 
      Initialize();
-     Games.add("Overwatch");
-     Games1.add("Overwatch 2");
-        TC.getHelix().getGames("Overwatch",Games,Games1).execute();
         TC.getEventManager().onEvent(ChannelChangeGameEvent.class, game -> {
-            TC.
+            TC.getChat().sendMessage(game.getChannel().getName(),String.format("%s -> game has been changed to %s",game.getChannel().getName(),game.getGameId()));
         });
     TC.getEventManager().onEvent(ChannelMessageEvent.class, OnMessage ->{
 
@@ -87,8 +82,20 @@ public class RunBot{
                         Candidates.clear();
                     }else
                         OnMessage.getTwitchChat().sendMessage(Channel, "Cannot pull a winner without participants");
-                }
-            }
-     });
+                }if(UsedCommand.equalsIgnoreCase("CreatePrediction")){
+                    try {
+                        List<String> Outcomes = new ArrayList<>();
+                        Object obj = new Object();
+                        obj = "";
+                        String[] PredictionContent = Message.replaceFirst("!createprediction","").split(", ");
+                        for(int GetOutcomes = 3; GetOutcomes < PredictionContent.length - 1; GetOutcomes++)
+                            Outcomes.add(PredictionContent[GetOutcomes]);
+                        for(String content:PredictionContent)
+                            System.out.printf("%s",content);
+                        Prepare.CreatePrediction(PredictionContent[0], Integer.parseInt(PredictionContent[2]), PredictionContent[1], Outcomes);
+                    }catch(ArrayIndexOutOfBoundsException e){
+                        OnMessage.getTwitchChat().sendMessage(Channel,String.format("The required format should imply and look similar to the following: Title, Channel, Duration, Outcome1, Outcome2"));
+                    }}if()
+            }});
     }}
 

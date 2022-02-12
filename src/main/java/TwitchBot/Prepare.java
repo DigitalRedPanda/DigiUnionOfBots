@@ -6,6 +6,17 @@ import com.github.philippheuer.credentialmanager.domain.OAuth2Credential;
 import com.github.twitch4j.TwitchClient;
 import com.github.twitch4j.TwitchClientBuilder;
 import com.github.twitch4j.auth.providers.TwitchIdentityProvider;
+import com.github.twitch4j.eventsub.domain.PredictionColor;
+import com.github.twitch4j.eventsub.domain.PredictionOutcome;
+import com.github.twitch4j.graphql.internal.type.CreatePredictionEventInput;
+import com.github.twitch4j.graphql.internal.type.CreatePredictionOutcomeInput;
+import com.github.twitch4j.helix.domain.Poll;
+import com.github.twitch4j.helix.domain.Prediction;
+import com.github.twitch4j.helix.domain.PredictionsList;
+
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static TwitchBot.BotResources.*;
@@ -45,10 +56,27 @@ public interface Prepare {
      TC.getChat().sendMessage(DefaultChannel,"Bot has been initialized");
      JoinChannel(DefaultChannel);
     }static boolean ChannelExists(String ChannelToConfirm){
-        boolean ChannelDoesExist;
-        TC.getChat().joinChannel(ChannelToConfirm);
-        ChannelDoesExist = TC.getChat().isChannelJoined(ChannelToConfirm);
-        TC.getChat().leaveChannel(ChannelToConfirm);
-        return ChannelDoesExist;
+        return false;
     }
+    static void CreatePrediction(String Title,Integer Duration,String Channel,List<String> OutComes){
+        List<CreatePredictionOutcomeInput> outcomesList = new ArrayList<>();
+        for(String Outcome:OutComes) {
+            CreatePredictionOutcomeInput outcome = CreatePredictionOutcomeInput.builder()
+                    .title(Outcome)
+                    .build();
+            outcomesList.add(outcome);
+        }
+        CreatePredictionEventInput PredictionInput = CreatePredictionEventInput.builder()
+                .predictionWindowSeconds(Duration)
+                .title(Title)
+                .outcomes(outcomesList)
+                .channelID(Channel)
+                .build();
+        TC.getGraphQL().createPrediction(credential,PredictionInput);
+    }static void CreatePoll(){
+
+
+    }
+
+
 }
