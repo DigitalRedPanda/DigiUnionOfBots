@@ -6,19 +6,11 @@ import com.github.philippheuer.credentialmanager.domain.OAuth2Credential;
 import com.github.twitch4j.TwitchClient;
 import com.github.twitch4j.TwitchClientBuilder;
 import com.github.twitch4j.auth.providers.TwitchIdentityProvider;
-import com.github.twitch4j.eventsub.domain.PredictionColor;
-import com.github.twitch4j.eventsub.domain.PredictionOutcome;
 import com.github.twitch4j.graphql.internal.type.CreatePredictionEventInput;
 import com.github.twitch4j.graphql.internal.type.CreatePredictionOutcomeInput;
-import com.github.twitch4j.helix.domain.Poll;
-import com.github.twitch4j.helix.domain.Prediction;
-import com.github.twitch4j.helix.domain.PredictionsList;
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import static TwitchBot.BotResources.*;
 
 public interface Prepare {
